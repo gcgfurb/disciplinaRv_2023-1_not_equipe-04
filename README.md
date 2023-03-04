@@ -5,8 +5,12 @@ Favor utilizar as respectivas pastas para postar os trabalhos de cada unidade.
 
 Alunos:  
 
-- Computação:  
-- Pedagogia:  
+    José Leonardo Perich  
+    Matheus Felipe da Silva Sychocki  
+    Matheus Soares Cardoso  
+    Rodrigo Luís Zimmermann  
+    Thomas Anderson Rodrigues  
+    Victor Weiers Krepsky  
 
 Assunto:  
 
