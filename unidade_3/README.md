@@ -2,6 +2,24 @@
 
 Local para postar a atividade da unidade 3.  
 
+## Roteiro de apresentação
+
+### Teórica
+
+Apresentação deve constar:
+
+- [ ] assunto para desenvolver o Projeto da disciplina  
+- [ ] lista das funcionalidades  
+- [ ] protótipo de telas (no caso pode ser desenhos de "todos" os espaços da aplicação)  
+Nesta apresentação se pode utilizar slides, videos, ou mesmo de aplicações que sejam correlatas a ideia proposta para poder exemplificar o Projeto proposto.
+
+### Prática
+
+- [ ] Aplicação de exemplo usando template padrão disponível no Unity Hub: 3D Core
+  - [ ] Este exemplo já ter um ou mais Assets importados da loja: [Assets](#assets)  
+- [ ] Aplicação de exemplo usando [Multiplayer](#multiplayer)  
+  - [ ] [Mirror Unity](#mirror-unity)  
+
 ## Multiplayer
 
 ### Netcode for Gameobjects
