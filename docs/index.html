@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Painel de Perguntas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .question {
+            background-color: #fff;
+            padding: 1px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question h2 {
+            margin-bottom: 1px;
+            color: #555;
+        }
+
+        .answers {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .answers li {
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            display: block;
+            margin-top: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .correct {
+            background-color: #dff0d8;
+        }
+
+        .error {
+            background-color: #e9afa3b6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Painel de Perguntas</h1>
+
+    <div id="questions-container"></div>
+
+    <button class="submit-btn" onclick="checkAnswers()">Verificar Respostas</button>
+
+    <p class="result" id="result"></p>
+
+    <script>
+        var questions = [{
+            question: "Qual é a linguagem de programação mais usada?",
+            answers: ["Java", "C++", "Python", "JavaScript"],
+            correctAnswer: "JavaScript"
+        }, {
+            question: "Qual é a capital do Brasil?",
+            answers: ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"],
+            correctAnswer: "Brasília"
+        }, {
+            question: "O que é CSS?",
+            answers: ["Cascading Style Sheets", "Computer Style Sheets", "Creative Style Sheets", "Colorful Style Sheets"],
+            correctAnswer: "Cascading Style Sheets"
+        }, {
+            question: "O que é o resultado da expressão 2 + 2 * 3?",
+            answers: ["4", "8", "10", "12"],
+            correctAnswer: "8"
+        }, {
+            question: "O que significa HTML?",
+            answers: ["Hyperlinks and Text Markup Language", "Home Tool Markup Language", "Hyper Text Markup Language", "Hyper Tool Markup Language"],
+            correctAnswer: "Hyper Text Markup Language"
+        }, {
+            question: "Qual é a linguagem de programação usada para desenvolvimento de aplicativos Android?",
+            answers: ["Java", "Swift", "C#", "Kotlin"],
+            correctAnswer: "Kotlin"
+        }, {
+            question: "O que é uma API?",
+            answers: ["Application Programming Interface", "Advanced Programming Interface", "Application Process Interface", "Advanced Process Interface"],
+            correctAnswer: "Application Programming Interface"
+        }, {
+            question: "Quais são os três pilares da programação orientada a objetos?",
+            answers: ["Encapsulamento, Polimorfismo, Herança", "Abstração, Herança, Polimorfismo", "Encapsulamento, Abstração, Herança", "Abstração, Polimorfismo, Encapsulamento"],
+            correctAnswer: "Encapsulamento, Herança, Polimorfismo"
+        }, {
+            question: "Qual é o método utilizado para adicionar um elemento ao final de um array em JavaScript?",
+            answers: ["push()", "pop()", "shift()", "unshift()"],
+            correctAnswer: "push()"
+        }, {
+            question: "Qual é o conceito de herança na programação orientada a objetos?",
+            answers: ["Uma técnica para ocultar detalhes internos de uma classe", "Uma abordagem para agrupar dados e comportamentos relacionados", "Uma forma de criar novas classes a partir de classes existentes", "Um princípio que permite a um objeto assumir várias formas"],
+            correctAnswer: "Uma forma de criar novas classes a partir de classes existentes"
+        }, {
+            question: "Qual é o método utilizado para remover o último elemento de um array em JavaScript?",
+            answers: ["pop()", "push()", "shift()", "unshift()"],
+            correctAnswer: "pop()"
+        }, {
+            question: "O que é o paradigma de programação funcional?",
+            answers: ["Um estilo de programação que se concentra na lógica procedural", "Um método de programação que usa apenas funções puras", "Uma abordagem que organiza o código em módulos independentes", "Um modelo de programação baseado em objetos que possuem propriedades e métodos"],
+            correctAnswer
+
+                : "Um método de programação que usa apenas funções puras"
+        }, {
+            question: "O que é uma variável em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um nome simbólico usado para armazenar e manipular dados", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira"],
+            correctAnswer: "Um nome simbólico usado para armazenar e manipular dados"
+        }, {
+            question: "Qual é o operador de igualdade estrita em JavaScript?",
+            answers: ["=", "==", "===", "!=="],
+            correctAnswer: "==="
+        }, {
+            question: "O que é o conceito de encapsulamento na programação orientada a objetos?",
+            answers: ["Uma técnica para ocultar detalhes internos de uma classe", "Uma abordagem para agrupar dados e comportamentos relacionados", "Uma forma de criar novas classes a partir de classes existentes", "Um princípio que permite a um objeto assumir várias formas"],
+            correctAnswer: "Uma técnica para ocultar detalhes internos de uma classe"
+        }, {
+            question: "O que é uma função em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Um bloco de código reutilizável que realiza uma tarefa específica"],
+            correctAnswer: "Um bloco de código reutilizável que realiza uma tarefa específica"
+        }, {
+            question: "Qual é o operador lógico 'OU' em JavaScript?",
+            answers: ["&&", "||", "!", "^"],
+            correctAnswer: "||"
+        }, {
+            question: "O que é o DOM (Document Object Model)?",
+            answers: ["Uma linguagem de programação usada para estilizar páginas web", "Um formato de arquivo para armazenar dados estruturados", "Uma especificação que define a estrutura hierárquica de um documento HTML", "Um tipo de algoritmo de busca utilizado em programação"],
+            correctAnswer: "Uma especificação que define a estrutura hierárquica de um documento HTML"
+        }, {
+            question: "Qual é a linguagem de programação usada para desenvolvimento de aplicativos iOS?",
+            answers: ["Java", "Swift", "C#", "Kotlin"],
+            correctAnswer: "Swift"
+        }, {
+            question: "O que é uma classe em programação orientada a objetos?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Um modelo que define as propriedades e comportamentos de um objeto"],
+            correctAnswer: "Um modelo que define as propriedades e comportamentos de um objeto"
+        }, {
+            question: "Qual é o operador de negação em JavaScript?",
+            answers: ["=", "==", "!", "!=="],
+            correctAnswer: "!"
+        }, {
+            question: "O que é uma declaração condicional em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Uma estrutura de controle que executa um bloco de código se uma condição for verdadeira"],
+            correctAnswer: "Uma estrutura de controle que executa um bloco de código se uma condição for verdadeira"
+        }, {
+            question: "O que é uma propriedade em programação orientada a objetos?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma característica que descreve um objeto, como cor, tamanho ou nome", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira"],
+            correctAnswer: "Uma característica que descreve um objeto, como cor, tamanho ou nome"
+        }, {
+            question: "Qual é o operador de concatenação de strings em JavaScript?",
+            answers: ["+", "-", "*", "/"],
+            correctAnswer: "+"
+        }, {
+            question: "O que é a recursão em programação?",
+            answers: ["Uma técnica para ocultar detalhes internos de uma classe", "Um método de programação que usa apenas funções puras", "Um processo em que uma função chama a si mesma", "Um princípio que permite a um objeto assumir várias formas"],
+            correctAnswer: "Um processo em que uma função chama a si mesma"
+        }, {
+            question: "O que é uma variável local em programação?",
+            answers: ["Uma variável declarada fora de qualquer função", "Uma variável que pode ser acessada por qualquer função no programa", "Uma variável declarada dentro de uma função e acessível apenas dentro dessa função", "Uma variável que armazena um valor constante que não pode ser alterado"],
+            correctAnswer: "Uma variável declarada dentro de uma função e acessível apenas dentro dessa função"
+        }, {
+            question: "Qual é o operador de diferença em JavaScript?",
+            answers: ["=", "==", "!=", "!=="],
+            correctAnswer: "!="
+        }, {
+            question: "O que é um loop em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Uma estrutura de controle que executa um bloco de código se uma condição for verdadeira"],
+            correctAnswer: "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira"
+        }, {
+            question: "O que é a herança múltipla em programação orientada a objetos?",
+            answers: ["Um princípio que permite a um objeto assumir várias formas", "Um método para ocultar detalhes internos de uma classe", "Uma técnica que permite que uma classe herde propriedades e métodos de várias classes", "Uma abordagem para agrupar dados e comportamentos relacionados"],
+            correctAnswer: "Uma técnica que permite que uma classe herde propriedades e métodos de várias classes"
+        }, {
+            question: "Qual é o operador de atribuição em JavaScript?",
+            answers: ["=", "==", "+=", "-="],
+            correctAnswer
+
+                : "="
+        }, {
+            question: "O que é uma função recursiva?",
+            answers: ["Uma função que pode ser chamada repetidamente em um loop", "Uma função que chama a si mesma dentro de seu próprio corpo", "Uma função que usa expressões regulares para manipular cadeias de caracteres", "Uma função que retorna um valor booleano com base em uma condição"],
+            correctAnswer: "Uma função que chama a si mesma dentro de seu próprio corpo"
+        }, {
+            question: "O que é uma variável global em programação?",
+            answers: ["Uma variável declarada fora de qualquer função", "Uma variável que pode ser acessada por qualquer função no programa", "Uma variável declarada dentro de uma função e acessível apenas dentro dessa função", "Uma variável que armazena um valor constante que não pode ser alterado"],
+            correctAnswer: "Uma variável declarada fora de qualquer função"
+        }, {
+            question: "Qual é o operador de concatenação de strings em Python?",
+            answers: ["+", "-", "*", "/"],
+            correctAnswer: "+"
+        }, {
+            question: "O que é um algoritmo em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Um conjunto de instruções que resolve um problema ou executa uma tarefa específica"],
+            correctAnswer: "Um conjunto de instruções que resolve um problema ou executa uma tarefa específica"
+        }, {
+            question: "O que é a sobrecarga de métodos em programação orientada a objetos?",
+            answers: ["Um princípio que permite a um objeto assumir várias formas", "Um método para ocultar detalhes internos de uma classe", "Uma técnica que permite que uma classe herde propriedades e métodos de várias classes", "Uma situação em que uma classe possui vários métodos com o mesmo nome, mas com parâmetros diferentes"],
+            correctAnswer: "Uma situação em que uma classe possui vários métodos com o mesmo nome, mas com parâmetros diferentes"
+        }, {
+            question: "Qual é o operador de diferença em Python?",
+            answers: ["=", "==", "!=", "!=="],
+            correctAnswer: "!="
+        }, {
+            question: "O que é uma estrutura de dados em programação?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira", "Uma forma de organizar e armazenar dados para facilitar o acesso e a manipulação"],
+            correctAnswer: "Uma forma de organizar e armazenar dados para facilitar o acesso e a manipulação"
+        }, {
+            question: "Qual é o operador de atribuição em Python?",
+            answers: ["=", "==", "+=", "-="],
+            correctAnswer: "="
+        }, {
+            question: "O que é um método em programação orientada a objetos?",
+            answers: ["Um valor constante que não pode ser alterado", "Um conjunto de instruções executadas em sequência", "Uma função que pertence a uma classe e pode ser chamada em objetos dessa classe", "Uma estrutura de controle que repete um bloco de código enquanto uma condição é verdadeira"],
+            correctAnswer: "Uma função que pertence a uma classe e pode ser chamada em objetos dessa classe"
+        },
+        {
+            question: "Qual é o operador de negação em Python?",
+            answers: ["=", "==", "!", "!=="],
+            correctAnswer: "!"
+        },
+        {
+            question: "Qual é o símbolo utilizado para fazer comentários em JavaScript?",
+            answers: ["//", "<!-- -->", "/* */", "#"],
+            correctAnswer: "//"
+        }
+        ];
+
+        function getRandomQuestions(questions, count) {
+            var randomQuestions = [];
+            var questionsCopy = questions.slice();
+
+            for (var i = 0; i < count; i++) {
+                var randomIndex = Math.floor(Math.random() * questionsCopy.length);
+                var randomQuestion = questionsCopy.splice(randomIndex, 1)[0];
+                randomQuestions.push(randomQuestion);
+            }
+
+            return randomQuestions;
+        }
+
+        function displayQuestions(questions) {
+            var questionsContainer = document.getElementById("questions-container");
+            var randomQuestions = getRandomQuestions(questions, 3);
+
+            randomQuestions.forEach(function (question, index) {
+                var questionElement = document.createElement("div");
+                questionElement.className = "question";
+
+                var questionTitle = document.createElement("h2");
+                questionTitle.textContent = "Pergunta " + (index + 1) + ": " + question.question;
+
+                var answersList = document.createElement("ul");
+                answersList.className = "answers";
+
+                question.answers.forEach(function (answer, answerIndex) {
+                    var answerItem = document.createElement("li");
+
+                    var answerInput = document.createElement("input");
+                    answerInput.type = "radio";
+                    answerInput.name = "question-" + index;
+                    answerInput.value = answer;
+
+                    var answerLabel = document.createElement("label");
+                    answerLabel.textContent = answer;
+
+                    answerItem.appendChild(answerInput);
+                    answerItem.appendChild(answerLabel);
+                    answersList.appendChild(answerItem);
+                });
+
+                // Inserir resposta oculta
+                var hiddenAnswerInput = document.createElement("input");
+                hiddenAnswerInput.type = "hidden";
+                hiddenAnswerInput.name = "question-" + index + "-answer";
+                hiddenAnswerInput.value = question.correctAnswer;
+                questionElement.appendChild(hiddenAnswerInput);
+
+                questionElement.appendChild(questionTitle);
+                questionElement.appendChild(answersList);
+
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        function checkAnswers() {
+            var result = document.getElementById("result");
+            var questionsContainer = document.getElementById("questions-container");
+            var questions = questionsContainer.getElementsByClassName("question");
+            var score = 0;
+            var randomKey;
+
+
+            for (var i = 0; i < questions.length; i++) {
+                var question = questions[i];
+                var selectedAnswer = question.querySelector("input[name='question-" + i + "']:checked");
+                var hiddenAnswer = question.querySelector("input[name='question-" + i + "-answer']");
+                var showKey = false;
+
+                if (selectedAnswer !== null && selectedAnswer.value === hiddenAnswer.value) {
+                    question.classList.add("correct");
+                    question.classList.remove("error");
+                    score++;
+                } else {
+                    question.classList.remove("correct");
+                    question.classList.add("error");
+                }
+                
+                if (score == 3) {
+                    showKey = true;
+                }
+            }
+
+            result.textContent = "Você acertou " + score + " de " + questions.length + " perguntas.";
+            
+            if (showKey) {
+                result.textContent = result.textContent + " Sua senha é: " + getRandomKey();
+            }
+        }
+
+        displayQuestions(questions);
+
+        function getRandomKey() {
+            var keys = [
+                "AFD", "EBC", "BCF", "CBE",
+                "FDC", "CED", "EAB", "EDA",
+                "DFC", "BAC", "FAD", "DCE",
+                "CBA", "BCD", "DEF", "AFD",
+                "EFA", "BAF", "CBA", "DCB"
+            ];
+
+            var randomIndex = Math.floor(Math.random() * keys.length);
+            return keys[randomIndex];
+        }
+
+    </script>
+</body>
+
+</html>
