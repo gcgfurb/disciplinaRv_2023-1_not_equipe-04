@@ -87,7 +87,7 @@ namespace Mirror.Examples.AdditiveScenes
             if (!characterController.enabled)
                 return;
 
-            HandleTurning();
+            //HandleTurning();
             HandleJumping();
             HandleMove();
 
